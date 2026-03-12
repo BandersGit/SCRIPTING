@@ -1,6 +1,6 @@
 word_count = 0   # Initialiserar variablerna
 line_count = 0
-line_that_a_word_appears_on = ""
+lines_that_a_word_appears_on = []
 
 print("This script counts lines and words in text files")
 
@@ -16,7 +16,7 @@ while True:     # Loop för att slippa starta om programmet när man skriver fel
             try:    # Använder try för att fånga fel i öppningen av filen
                 with open(input_file, "r", encoding="utf-8") as f:    # Öppnar filen och använder variablen f för att hantera den (behövde definera encoding för att få filen att läsas korrekt)
                     print("You can count specific words aswell")
-                    input_word = input("Enter your word here or leave blank to count all words and lines: ")
+                    input_word = input("Enter your word here (case sensitive) or leave blank to count all words and lines: ")
 
                     if input_word == "":    # Om inget ord specificeras, räknas alla ord och rader
                         for line in f:      # For loop som går igenom varje rad i filen   
@@ -34,14 +34,13 @@ while True:     # Loop för att slippa starta om programmet när man skriver fel
                             stripped_line = line.rstrip()
                             all_words_on_line = stripped_line.split() #Separerar raden i ord så att sökningen inte tar upp delar av ett annat ord, exempelvis en sökning på "He" kan annars ta upp ord som "Hell"
 
-                            if input_word in all_words_on_line: # Om det specificerade ordet finns i den nuvarande raden räknas det och raden den var på läggs till i en string (bäst skulle vara en array eller lista)
+                            if input_word in all_words_on_line: # Om det specificerade ordet finns i den nuvarande raden räknas det och raden den var på läggs till i en fördefinerad lista
                                 word_count += 1
-                                line_that_a_word_appears_on += str(line_count)
-                                line_that_a_word_appears_on += " "
+                                lines_that_a_word_appears_on.append(str(line_count))
                                 
                         print("There are", word_count, "instances of", input_word)
                         if word_count > 0:
-                            print("They appear on lines", line_that_a_word_appears_on)
+                            print("They appear on lines:", lines_that_a_word_appears_on)
                         break
             except:
                 print("Could not find/open specified file")
